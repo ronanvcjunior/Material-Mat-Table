@@ -9,7 +9,7 @@ import { ProdutoEstoque } from '../model/produto.model'
 })
 
 export class ProdutoEstoqueService {
-    urlBase: string = "http://localhost:4201/produtoEstoque"
+    urlBase: string = "http://localhost:8080/produtoEstoque"
 
     constructor(
       private http: HttpClient,
