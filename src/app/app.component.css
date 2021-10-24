@@ -16,10 +16,6 @@ table {
   width: 100%;
 }
 
-.icon_delete {
-    color: rgb(218, 0, 0);
-    cursor: pointer;
-}
 
 .hide {
     display: none;
