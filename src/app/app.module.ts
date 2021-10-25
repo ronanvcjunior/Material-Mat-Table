@@ -9,11 +9,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorIntlPtBr } from './util/paginator-ptbr-i8n';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSnackBarModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlPtBr }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

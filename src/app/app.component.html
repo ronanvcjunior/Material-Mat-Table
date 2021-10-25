@@ -25,7 +25,7 @@
         
         <ng-container matColumnDef="prUnitario">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor </th>
-          <td mat-cell *matCellDef="let row"> R$ {{formatar(row.prUnitario)}} por{{row.unidadeMedida}} </td>
+          <td mat-cell *matCellDef="let row"> R$ {{formatar(row.prUnitario)}} por {{row.unidadeMedida}} </td>
         </ng-container>
 
         <ng-container matColumnDef="qtdEstoque">
@@ -38,14 +38,12 @@
           <td class="qtd" mat-cell *matCellDef="let row"> {{row.qtdReservada}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="loading">
-          <mat-footer-cell *matFooterCellDef aria-colspan="6">
-            Carrengando Dados...
-          </mat-footer-cell>
-        </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+        <tr matColumnDef="loading">
+          <td *matFooterCellDef colspan="6"> Carrengando Dados... </td>
+        </tr>
 
         <mat-footer-row *matFooterRowDef="[ 'loading' ]" [ngClass]="{ 'hide': dataSource!=null }"></mat-footer-row>
         
@@ -54,7 +52,7 @@
         </tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of users">
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Selecionar página de produtos">
       </mat-paginator>
     </div>
   </div>
