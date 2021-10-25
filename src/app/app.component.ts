@@ -1,8 +1,8 @@
 import {  Component, OnInit, ViewChild } from '@angular/core' 
 import { MatPaginator } from '@angular/material/paginator' 
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog' 
 import { MatTableDataSource } from '@angular/material/table' 
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort' 
 import { ProdutoEstoque } from '../app/model/produto.model'
 import { ProdutoEstoqueService } from '../app/service/ProdutoEstoque.service'
 
@@ -15,9 +15,9 @@ import { ProdutoEstoqueService } from '../app/service/ProdutoEstoque.service'
 export class AppComponent implements OnInit{
 
   displayedColumns: string[] = ['idProdutoEstoque', 'grupo', 'nmProduto', 'prUnitario', 'qtdEstoque', 'qtdReservada'] 
-  dataSource!: MatTableDataSource<ProdutoEstoque>;
+  dataSource!: MatTableDataSource<ProdutoEstoque> 
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator 
   @ViewChild(MatSort) sort!: MatSort 
 
   constructor( 
@@ -25,17 +25,21 @@ export class AppComponent implements OnInit{
 
   ) { }
 
+  formatar(n: number) {
+    return n.toFixed(2).replace('.', ',')
+  }
+
   atualizarDados(): void{
     this.service.findAll().subscribe(produtos => {
-      this.dataSource = new MatTableDataSource(produtos);
-      this.dataSource.paginator = this.paginator;
+      this.dataSource = new MatTableDataSource(produtos)
+      this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
     })
 
   }
 
   ngOnInit() {
-    this.atualizarDados(); 
+    this.atualizarDados()  
   }
 
   applyFilter(event: Event) {
