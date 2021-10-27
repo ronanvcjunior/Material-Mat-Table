@@ -7,6 +7,7 @@ import { ProdutoEstoque } from './model/produtoEstoque.model'
 import { ProdutoEstoqueService } from '../app/service/ProdutoEstoque.service'
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { waitForAsync } from '@angular/core/testing'
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,8 @@ export class AppComponent implements AfterViewInit{
   filterValue!: string
 
   produtoEstoques: ProdutoEstoque[] = []
-
   displayedColumns: string[] = ['idProdutoEstoque', 'grupo', 'nmProduto', 'prUnitario', 'qtdEstoque', 'qtdReservada'] 
-  dataSource!: MatTableDataSource<ProdutoEstoque> 
+  // dataSource!: MatTableDataSource<ProdutoEstoque> 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator 
   @ViewChild(MatSort) sort!: MatSort 
@@ -35,20 +35,34 @@ export class AppComponent implements AfterViewInit{
 
   ) { }
 
-  formatar(n: number) {
-    return n.toFixed(2).replace('.', ',')
+  formatarValor(valor: number) {
+    return valor.toFixed(2).replace('.', ',')
   }
 
-  atualizarDados(): void{
-    this.service.findAll().subscribe(produtos => {
-      this.dataSource = new MatTableDataSource(produtos)
-      this.dataSource.paginator = this.paginator
-      this.dataSource.sort = this.sort
-    })
+  // atualizarDados(): void{
+  //   this.service.findAll().subscribe(produtos => {
+  //     this.dataSource = new MatTableDataSource(produtos)
+  //     this.dataSource.paginator = this.paginator
+  //     this.dataSource.sort = this.sort
+  //   })
 
-  }
+  // }
 
   atualizarDadosPage(): void {
+    // this.service.findAllPaginator(
+    //     this.sort.active,
+    //     this.sort.direction,
+    //     this.paginator.pageIndex, 
+    //     this.paginator.pageSize,
+    //     this.filterValue
+    // ).subscribe(data => {
+    //   console.log(data)
+    //   this.resultsLength = data.totalElements
+    //   this.dataSource = new MatTableDataSource(data.content)
+    //   this.dataSource.paginator = this.paginator
+    //   this.dataSource.sort = this.sort
+    // })
+    
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0)
 
     merge(this.sort.sortChange, this.paginator.page)
@@ -67,19 +81,18 @@ export class AppComponent implements AfterViewInit{
               map(data => {
                   this.isLoadingResults = false
                   this.isRateLimitReached = data ===null
-                  console.log(data)
+                  // console.log(data)
                   if (data === null) {
                     return []
                   }
 
                   this.resultsLength = data.totalElements
+                  // console.log(this.resultsLength)
                   return data.content
                 })
         ).subscribe((produtos => {
-      this.dataSource = new MatTableDataSource(produtos)
-      this.dataSource.paginator = this.paginator
-      this.dataSource.sort = this.sort
-      console.log(produtos)
+      this.produtoEstoques = produtos
+      // console.log(produtos)
     }))
 
   }
@@ -90,11 +103,12 @@ export class AppComponent implements AfterViewInit{
 
   applyFilter(event: Event) {
     this.filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase()
-    // this.dataSource.filter = this.filterValue
+    this.paginator.pageIndex = 0
     this.atualizarDadosPage()
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage() 
-    }
+    // this.dataSource.filter = this.filterValue
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage()
+    // }
   }
 
 }

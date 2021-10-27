@@ -35,8 +35,8 @@ export class ProdutoEstoqueService {
     }
 
     findAllPaginator(sort: string, order: SortDirection, page: number, size: number, filter: string): Observable<produtoEstoquePage> {
-        console.log(sort);
-        console.log(order);
+        // console.log(sort);
+        // console.log(order);
         
         
         if (filter === undefined) {
@@ -44,17 +44,16 @@ export class ProdutoEstoqueService {
         }
 
         let url: string
-        if (sort == 'idProdutoEstoque' || sort == 'qtdEstoque' || sort == 'qtdReservada') {
+        
+        if (sort === undefined  || order === '') {
+            url = `${this.urlBase}/page/?nmProduto=${filter}&page=${page}&size=${size}`
+        } else if (sort === 'idProdutoEstoque' || sort === 'qtdEstoque' || sort === 'qtdReservada') {
             url = `${this.urlBase}/page/?nmProduto=${filter}&page=${page}&size=${size}&sort=${sort},${order}`
-        } else if(sort === undefined) {
-            url = `${this.urlBase}/page/?nmProduto=${filter}&page=${page}&size=${size}&sort=idProdutoEstoque`
-        } else if (order === '') {
-            url = `${this.urlBase}/page/?nmProduto=${filter}&page=${page}&size=${size}&sort=idProdutoEstoque`
         } else {
             url = `${this.urlBase}/page/?nmProduto=${filter}&page=${page}&size=${size}&sort=produto.${sort},${order}`
         }
 
-        console.log(url)        
+        // console.log(url)        
         return this.http.get<produtoEstoquePage>(url)
     }
 }

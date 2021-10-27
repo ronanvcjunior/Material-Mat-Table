@@ -6,7 +6,7 @@
     </mat-form-field>
 
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort>
+      <table mat-table [dataSource]="produtoEstoques" matSort>
 
         <ng-container matColumnDef="idProdutoEstoque">
           <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> #ID </th>
@@ -25,7 +25,7 @@
         
         <ng-container matColumnDef="prUnitario">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor </th>
-          <td mat-cell *matCellDef="let row"> R$ {{formatar(row.prUnitario)}} por {{row.unidadeMedida}} </td>
+          <td mat-cell *matCellDef="let row"> R$ {{formatarValor(row.prUnitario)}} por {{row.unidadeMedida}} </td>
         </ng-container>
 
         <ng-container matColumnDef="qtdEstoque">
@@ -45,7 +45,7 @@
           <td *matFooterCellDef colspan="6"> Carrengando Dados... </td>
         </tr>
 
-        <mat-footer-row *matFooterRowDef="[ 'loading' ]" [ngClass]="{ 'hide': dataSource!=null }"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="[ 'loading' ]" [ngClass]="{ 'hide': produtoEstoques!=null }"></mat-footer-row>
         
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="6">Nenhum produto encontrado com o nome "{{input.value}}"</td>
